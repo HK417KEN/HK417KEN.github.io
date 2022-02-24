@@ -81,12 +81,12 @@
                 };
             }
 
-            function initInputEvent(obj) {
-                $('.min').each(function () {$(this).on('input', function () {obj.setMin(parseInt(this.value)).go()})});
-                $('.max').each(function () {$(this).on('input', function () {obj.setMax(parseInt(this.value)).go()})});
-                $('.line-per-num').each(function () {$(this).on('input', function () {obj.setNumPerLine(parseInt(this.value)).go()})});
-                $('.total-line').each(function () {$(this).on('input', function () {obj.setTotalLine(parseInt(this.value)).go()})});
-                $('.flush').click(() => {obj.go()});
+            function defEvent(rnr) {
+                $('.min').each(function () {$(this).on('input', function () {rnr.setMin(parseInt(this.value)).go()})});
+                $('.max').each(function () {$(this).on('input', function () {rnr.setMax(parseInt(this.value)).go()})});
+                $('.line-per-num').each(function () {$(this).on('input', function () {rnr.setNumPerLine(parseInt(this.value)).go()})});
+                $('.total-line').each(function () {$(this).on('input', function () {rnr.setTotalLine(parseInt(this.value)).go()})});
+                $('.flush').click(() => {rnr.go()});
             }
 
             this.rnr = new rangeNumRandom(
@@ -97,7 +97,7 @@
                 (html) => {$('.rand').html(html)}
             );
             this.rnr.go();
-            initInputEvent(this.rnr);
+            defEvent(this.rnr);
         });
     </script>
 </head>
