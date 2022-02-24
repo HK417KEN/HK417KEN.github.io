@@ -68,7 +68,6 @@
                 setTotalLine(totalLine) {this.totalLine = totalLine}
                 getRangeNumRandom(m, n) {return Math.floor(Math.random() * (m - n - 1)) + n + 1}
                 go() {
-                    console.log(this.min, this.max);
                     this.html = '';
                     for (let i = 1; i <= this.totalLine; i++) {
                         this.inner = '';
