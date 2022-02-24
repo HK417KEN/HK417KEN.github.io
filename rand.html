@@ -62,10 +62,10 @@
                     if (totalLine) this.totalLine = totalLine;
                     if (callback) this.callback = callback;
                 }
-                setMin(min) {this.min = min}
-                setMax(max) {this.max = max}
-                setNumPerLine(numPerLine) {this.numPerLine = numPerLine}
-                setTotalLine(totalLine) {this.totalLine = totalLine}
+                setMin(min) {this.min = min; return this}
+                setMax(max) {this.max = max; return this}
+                setNumPerLine(numPerLine) {this.numPerLine = numPerLine; return this}
+                setTotalLine(totalLine) {this.totalLine = totalLine; return this}
                 getRangeNumRandom(m, n) {return Math.floor(Math.random() * (m - n - 1)) + n + 1}
                 go() {
                     this.html = '';
@@ -82,10 +82,10 @@
             }
 
             function initInputEvent(obj) {
-                $('.min').each(function () {$(this).on('input', function () {obj.setMin(parseInt(this.value)); obj.go()})});
-                $('.max').each(function () {$(this).on('input', function () {obj.setMax(parseInt(this.value)); obj.go()})});
-                $('.line-per-num').each(function () {$(this).on('input', function () {obj.setNumPerLine(parseInt(this.value)); obj.go()})});
-                $('.total-line').each(function () {$(this).on('input', function () {obj.setTotalLine(parseInt(this.value)); obj.go()})});
+                $('.min').each(function () {$(this).on('input', function () {obj.setMin(parseInt(this.value)).go()})});
+                $('.max').each(function () {$(this).on('input', function () {obj.setMax(parseInt(this.value)).go()})});
+                $('.line-per-num').each(function () {$(this).on('input', function () {obj.setNumPerLine(parseInt(this.value)).go()})});
+                $('.total-line').each(function () {$(this).on('input', function () {obj.setTotalLine(parseInt(this.value)).go()})});
                 $('.flush').click(() => {obj.go()});
             }
 
