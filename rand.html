@@ -86,7 +86,7 @@
                 $('.max').each(function () {$(this).on('input', function () {rnr.setMax(parseInt(this.value)).go()})});
                 $('.line-per-num').each(function () {$(this).on('input', function () {rnr.setNumPerLine(parseInt(this.value)).go()})});
                 $('.total-line').each(function () {$(this).on('input', function () {rnr.setTotalLine(parseInt(this.value)).go()})});
-                $('.flush').click(() => {rnr.go()});
+                $('.flush').click({rnrObj: rnr}, event => event.data.rnrObj.go());
             }
 
             this.rnr = new rangeNumRandom(
@@ -94,7 +94,7 @@
                 $('.max').first().value,
                 $('.line-per-num').first().value,
                 $('.total-line').first().value,
-                (html) => {$('.rand').html(html)}
+                html => $('.rand').html(html)
             );
             this.rnr.go();
             defEvent(this.rnr);
