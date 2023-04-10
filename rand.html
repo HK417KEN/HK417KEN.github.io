@@ -38,7 +38,6 @@
         }
     </style>
     <script src="/static/js/jquery-3.6.4.min.js" type="application/javascript"></script>
-    <script>const AUTHOR = "<?= __AUTHOR__ ?>";</script>
     <script>
         class rangeNumRandom {
             min = 1;
@@ -65,6 +64,7 @@
             setMax(max) {this.max = max; return this}
             setNumPerLine(numPerLine) {this.numPerLine = numPerLine; return this}
             setTotalLine(totalLine) {this.totalLine = totalLine; return this}
+            setAllowDuplicate(allowDuplicate) {this.allowDuplicate = allowDuplicate; return this}
             getRangeNumRandom(m, n) {return Math.floor(Math.random() * (m - n - 1)) + n + 1}
             go() {
                 this.html = '';
@@ -121,6 +121,7 @@
             $('.max').each(function () {$(this).on('input', function () {rnr.setMax(parseInt(this.value)).go()})});
             $('.line-per-num').each(function () {$(this).on('input', function () {rnr.setNumPerLine(parseInt(this.value)).go()})});
             $('.total-line').each(function () {$(this).on('input', function () {rnr.setTotalLine(parseInt(this.value)).go()})});
+            $('.allow-duplicate').each(function () {$(this).on('change', function() {rnr.setAllowDuplicate($(this).prop('checked')).go()})});
             $('.flush').click({rnrObj: rnr}, event => event.data.rnrObj.go());
         }
 
