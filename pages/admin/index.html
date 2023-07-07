@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    
+  <script type="module" crossorigin src="/assets/admin.85e6306a.js"></script>
+  <link rel="modulepreload" href="/assets/petite-vue.es.dbdd9865.js">
+  <link rel="modulepreload" href="/assets/Toast.f6108760.js">
+  <link rel="modulepreload" href="/assets/login.1d6abafb.js">
+  <link rel="modulepreload" href="/assets/globalNotFoundImage.5768a9d5.js">
+  <link rel="modulepreload" href="/assets/Router.8773cb0b.js">
+  <link rel="stylesheet" href="/assets/Toast.a20911e6.css">
+</head>
+<body>
+<h1 class="before-login" style="text-align: center">Loading...</h1>
+<div class="after-login" style="display: none">
+    <h1>manager</h1>
+    <main>
+        <div class="items" @vue:mounted="index.getItem" v-if="index.fetchItems !== {}">
+            <div class="item" v-for="item in index.fetchItems">
+                <div class="img"><!-- 最佳比例: 16:9 最小图片尺寸：320 * 180 --><a :href="item.image" target="_blank"><img :src="item.image" alt="" style="width: 320px; height: 180px"></a></div>
+                <div class="info">
+                    <div class="title">
+                        <dl>
+                            <dd><div class="id">#{{ item.id }}</div> 标题</dd>
+                            <dt><label>中文:<input type="text" :value="item.title_cn" /></label></dt>
+                            <dt><label>日文:<input type="text" :value="item.title_ja" /></label></dt>
+                            <dt><label>英文:<input type="text" :value="item.title_en" /></label></dt>
+                        </dl>
+                    </div>
+                    <div class="wear"><label>磨损:<input type="number" :value="item.wear" /></label></div>
+                    <div class="price"><label>价格:<input type="number" :value="item.price" />円</label></div>
+                    <div class="trading-time">
+                        <label>可交易时间：<input type="text" :value="item.trading_time" /></label>
+                    </div>
+                    <div class="action">
+                        <div class="item-inspect--box">
+                            <label class="item-inspect--content">
+                                <a :href="item.view_link ? item.view_link : 'javascript:;'" :class="'item-inspect item-inspect-' + item.id"
+                                >Inspect</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button @click="index.itemNextPage">next page</button>
+            </div>
+        </div>
+        <div v-else>
+            loading...
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

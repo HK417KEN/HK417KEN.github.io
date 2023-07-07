@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SST</title>
+    
+  <script type="module" crossorigin src="/assets/admin_login.52ebe67f.js"></script>
+  <link rel="modulepreload" href="/assets/petite-vue.es.dbdd9865.js">
+  <link rel="modulepreload" href="/assets/Toast.f6108760.js">
+  <link rel="modulepreload" href="/assets/login.1d6abafb.js">
+  <link rel="stylesheet" href="/assets/Toast.a20911e6.css">
+</head>
+<body>
+<div id="login">
+    <div class="login-bigbox" @vue:mounted="admin.getCaptcha">
+        <div class="login-box">
+            <div class="title"><h1>login</h1></div>
+            <div class="content">
+                <div><input type="hidden" v-model="admin.captchaKey" /></div>
+                <div>
+                    <label><input type="text" placeholder="email" v-model="admin.email" @keyup.enter="admin.signIn" /></label>
+                </div>
+                <div>
+                    <label><input type="password" placeholder="password" v-model="admin.password" @keyup.enter="admin.signIn" @focus="$event.currentTarget.select()" /></label>
+                </div>
+                <div><hr></div>
+                <div>
+                    <label><input type="text" placeholder="captcha" v-model="admin.captcha" @keyup.enter="admin.signIn" @focus="$event.currentTarget.select()" /></label>
+                </div>
+                <div><p><img :src="admin.captchaImg" alt="" @click="admin.getCaptcha"></p></div>
+            </div>
+            <div class="button"><button @click="admin.signIn">Sign in</button></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
