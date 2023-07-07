@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8"/>
+    <title>SST</title>
+    
+  <script type="module" crossorigin src="/assets/index.45ce1646.js"></script>
+  <link rel="modulepreload" href="/assets/petite-vue.es.dbdd9865.js">
+  <link rel="modulepreload" href="/assets/Toast.49efcf65.js">
+  <link rel="modulepreload" href="/assets/globalNotFoundImage.5768a9d5.js">
+  <link rel="stylesheet" href="/assets/Toast.a20911e6.css">
+  <link rel="stylesheet" href="/assets/index.ba480d0d.css">
+</head>
+<body @vue:mounted="mounted">
+
+<div>
+    <header>
+        <div class="logo">CSGO iF Skins Market</div>
+        <nav>
+            <a href="javascript:" @click="language.setLocale('cn')">CN</a>
+            <a href="javascript:" @click="language.setLocale('en')">EN</a>
+            <a href="javascript:" @click="language.setLocale('ja')">JP</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="items" @vue:mounted="index.getItem">
+
+            <div class="item md-card" v-for="item in index.fetchItems">
+                <div class="title">
+                    <div class="name" @click="checkIWant(item.id)">
+                        <span class="id">#{{ item.id }}</span>{{ i18n.et(['__ITEM__TITLE__' + item.id + '__'], null, false) }}<span v-html="i18n.et('__BETWEEN_EM_SYMBOL__')"></span><span class="quality">{{ i18n.et(['(', item.quality_en, ')'], null, false) }}</span>
+                    </div>
+                </div>
+                <div class="pic"><a :href="item.image" target="_blank"><img :src="item.image" alt=""></a></div>
+                <div class="info">
+                    <div class="price">{{ item.price }} {{ i18n.t('jpy') }}</div>
+                    <div class="wear">{{ i18n.et(['float:']) }}<span v-html="i18n.et('__BETWEEN_EM_SYMBOL__')"></span>{{ item.wear }}</div>
+                    <div class="trading-time" :title="item.trading_time ? new Date(item.trading_time) : null">
+                        {{
+                            item.trading_time
+                                    ? i18n.t('trade at: ', [item.trading_time])
+                                    : i18n.t('trade now!')
+                        }}
+                    </div>
+                </div>
+                <div class="action">
+                    <div class="md-btn item-inspect--box">
+                        <label class="item-inspect--content">
+                            <a
+                                    :href="item.view_link ? item.view_link : 'javascript:;'"
+                                    :class="'item-inspect item-inspect-' + item.id"
+                            >{{ i18n.t('Inspect') }}</a>
+                        </label>
+                    </div>
+                    <div class="md-btn md-btn-checkbox i-want--box" @click="checkIWant(item.id, null, $event, 'input')">
+                        <label><input :class="index.iWant(item.id)" type="checkbox" /><span>{{ i18n.t('Select') }}</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order md-card md-card-group-root">
+                <div class="checkout md-card-group md-card-group-1">
+                    <div><h3>{{ i18n.t('Send') }}</h3></div>
+                    <div>
+                        <label><span>{{ i18n.t('Email') }}</span><input type="email" v-model="index.email"
+                                                        @keyup.enter="index.checkIfSendingIsAllowed(false) && MDCardGroup.next($event)" /></label>
+                    </div>
+                    <div>
+                        <label><span>{{ i18n.t('Steam trade url') }}</span><input type="text" v-model="index.link"
+                                                                  @keyup.enter="index.checkIfSendingIsAllowed(false) && MDCardGroup.next($event)" maxlength="40" /></label>
+                    </div>
+                    <div>
+                        <label><textarea :placeholder="i18n.t('leave a message...')" v-model="index.message" maxlength="255"></textarea></label>
+                    </div>
+                    <div class="action">
+                        <a class="md-s-btn rule" @click="PopUp.show('.pop-up--rule')">{{ i18n.t('Rule') }}</a>
+                        <a class="md-s-btn md-card-group-next" @click="index.checkIfSendingIsAllowed(false) && MDCardGroup.next($event)">{{ i18n.t('Next') }}</a>
+                    </div>
+                </div>
+                <div class="captcha md-card-group md-card-group-2" style="display: none;">
+                    <div><h3>{{ i18n.t('Captcha') }}</h3></div>
+                    <input type="hidden" v-model="index.captchaKey" />
+                    <div>
+                        <p @vue:mounted="index.getCaptcha"><img :src="index.captchaImg" alt="" @click="index.getCaptcha()"></p>
+                    </div>
+                    <div>
+                        <label><input type="text" :placeholder="i18n.t('Captcha')" v-model="index.captcha" @keyup.enter="index.send()"
+                                      @focus="$event.currentTarget.select()" /></label>
+                    </div>
+                    <div class="action">
+                        <a class="md-s-btn back md-card-group-previous" @click="MDCardGroup.previous">{{ i18n.t('Back') }}</a>
+                        <a class="md-s-btn send" @click="index.send()">{{ i18n.t('Send') }}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cart expansion expansion-no expansion-auto">
+            <div class="action-box">
+                <div class="action">
+                    <button class="scroll-to--top" @click="scrollToTopOrBottom($event, 1)" v-html="Icon.chevronUp"></button>
+                    <button class="scroll-to--bottom" @click="scrollToTopOrBottom($event, 0)" v-html="Icon.chevronDown"></button>
+                    <button class="cart expansion-act-no" @click="index.showCart(false)" style="display: none"><span class="num-bubble" v-html="Object.keys(index.cartItems).length"></span><span class="icon" v-html="Icon.shoppingCart"></span></button>
+                    <button class="cart expansion-act-yes" @click="index.showCart(true)"><span class="num-bubble" v-html="Object.keys(index.cartItems).length" v-if="Object.keys(index.cartItems).length"></span><span class="icon" v-html="Icon.shoppingCart"></span></button>
+                </div>
+            </div>
+            <div class="cart-items">
+                <div class="cart-item" v-for="item in index.cartItems">
+                    <div class="remove">
+                        <button @click="checkIWant(item.id, false)">X</button>
+                    </div>
+                    <div class="pic"><a :href="item.image" target="_blank"><img :src="item.image" alt=""></a></div>
+                    <div class="info">
+                        <div>#{{ item.id }}&nbsp;{{ i18n.et(['__ITEM__TITLE__' + item.id + '__', ' ', '(', item.quality_en, ')'], null, false) }}</div>
+                        <div class="price">{{ item.price }} {{ i18n.t('jpy') }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pop-up--rule pop-up pop-up-fullscreen" @click="PopUp.hide">
+            <div class="pop-up-pics">
+                <div class="pop-up-pic"><img src="/assets/pics/order.png" alt=""></div>
+                <div class="pop-up-pic"><img src="/assets/pics/preOrder.png" alt=""></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="copyright">Copyright © 2023 iF All rights reserved.</div>
+        <div class="cart-padding">&nbsp;</div>
+    </footer>
+</div>
+</body>
+</html>
