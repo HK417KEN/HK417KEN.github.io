@@ -1,7 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN" style="margin: 0; padding: 0; height: 100%">
 <head>
-<title>HK417KEN</title>
-<body>
-    Nothing here ...
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8"/>
+    <title>SST</title>
+    
+    
+  <script type="module" crossorigin src="/assets/main.068ac2ec.js"></script>
+  <link rel="modulepreload" href="/assets/petite-vue.es.dbdd9865.js">
+  <link rel="modulepreload" href="/assets/Router.8773cb0b.js">
+  <link rel="stylesheet" href="/assets/main.0772af3c.css">
+</head>
+<body style="padding: 0; margin: 0; height: 100%;">
+
+<noscript>
+    <h1 style="text-align: center">JavaScript is required. Please enable it to continue.</h1>
+</noscript>
+
+<iframe src="" style="display: block; border: none; padding: 0; margin: 0; width: 100%; height: 100%;"></iframe>
+
+<div
+        style="display: flex; flex-direction: column; justify-content: center; text-align: center; background: white; position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: xx-large; z-index: 1000;"
+        :style="'display: flex; flex-direction: column; justify-content: center; text-align: center; background: white; position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: xx-large; z-index: 1000; ' + FadeStyleLoadingPage.fadeOutStyleOnDone"
+>
+
+    <div
+            style="background: linear-gradient(90deg, red, blue); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+            :style="'display: none;'"
+    >
+        Loading...
+    </div>
+
+    <div class="fade-style-on-done-show" style="display: none" :style="FadeStyleLoadingPage.style">{{ FadeStyleLoadingPage.content }}</div>
+
+</div>
 </body>
 </html>
